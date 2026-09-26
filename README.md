@@ -24,8 +24,6 @@ AlgoGuide is a web app that takes a problem type and its constraints as input an
 - **AI/Recommendation Engine:** Gemini API + classification/decision-tree logic
 - **Other:** Python, basic ML for problem-to-category classification
 
-> Update this section if your actual stack differs — fill in specifics like styling framework, database (if any), and hosting.
-
 ---
 
 ## Taxonomy Categories
