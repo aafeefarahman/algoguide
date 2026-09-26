@@ -37,7 +37,6 @@ Problems are classified into the following algorithmic strategy categories, alig
 5. Branch & Bound
 6. Graph Algorithms
 7. Complexity Analysis / P-NP Theory
-8. (Add your 8th category here)
 
 ---
 
