@@ -27,14 +27,39 @@ app = FastAPI(
 
 @app.on_event("startup")
 async def startup_event():
-    key_present = os.getenv("GEMINI_API_KEY") is not None
-    logger.info(f"SERVER STARTUP | GEMINI_API_KEY is present: {key_present}")
+    gemini_key = os.getenv("GEMINI_API_KEY")
+    if not gemini_key:
+        logger.error("=" * 60)
+        logger.error("CRITICAL PRODUCTION WARNING: GEMINI_API_KEY is NOT set in the environment!")
+        logger.error("Recommender API calls will fail until GEMINI_API_KEY is configured.")
+        logger.error("=" * 60)
+    else:
+        logger.info("=" * 60)
+        logger.info(f"SERVER STARTUP | GEMINI_API_KEY is detected (length: {len(gemini_key)}, starts with: '{gemini_key[:4]}...').")
+        logger.info("=" * 60)
 
 
-# CORS configuration
+# CORS configuration supporting localhost and deployed production origins
+custom_origins = os.getenv("ALLOWED_ORIGINS", "")
+allowed_origins_list = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:3001",
+    "http://127.0.0.1:3001",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173"
+]
+
+if custom_origins:
+    for o in custom_origins.split(","):
+        cleaned = o.strip()
+        if cleaned and cleaned not in allowed_origins_list:
+            allowed_origins_list.append(cleaned)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:3001", "*"],
+    allow_origins=["*"] if not custom_origins else allowed_origins_list,
+    allow_origin_regex=r"https?://.*" if not custom_origins else None,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -94,9 +119,11 @@ async def get_recommendation(payload: RecommendRequest, request: Request):
             language=payload.language or "python"
         )
         return res
+    except HTTPException:
+        raise
     except Exception as e:
-        logger.error(f"Error processing recommendation request: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"Error processing recommendation request: {type(e).__name__}: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Internal recommender error: {str(e)}")
 
 
 @app.get("/api/categories")

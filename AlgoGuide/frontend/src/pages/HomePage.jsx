@@ -5,6 +5,7 @@ import RecommenderForm from '../components/RecommenderForm';
 import RecommendationResult from '../components/RecommendationResult';
 import CategoryCards from '../components/CategoryCards';
 import HowItWorks from '../components/HowItWorks';
+import { buildApiUrl } from '../config';
 
 // Client-side fallback recommendations for instant responsive UX
 const FALLBACK_RECOMMENDATIONS = {
@@ -147,11 +148,11 @@ export default function HomePage() {
     setIsLoading(true);
     setSelectedLanguage(formData.language || 'python');
 
-    console.log('[DEBUG SUBMIT HANDLER] Input text:', formData.description);
-    console.log('[DEBUG SUBMIT HANDLER] Request body:', JSON.stringify(formData));
+    const apiUrl = buildApiUrl('/api/recommend');
+    console.log('[API REQUEST] POST to:', apiUrl, 'Payload:', JSON.stringify(formData));
 
     try {
-      const response = await fetch('/api/recommend', {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -159,15 +160,15 @@ export default function HomePage() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('[DEBUG PARSED RESULT] Received response data:', data);
+        console.log('[API SUCCESS] Received response data:', data);
         setRecommendationResult(data);
       } else {
         const errText = await response.text();
-        console.error('[DEBUG SUBMIT HANDLER] API Error Response:', response.status, errText);
-        throw new Error('API request failed');
+        console.error(`[API ERROR ${response.status}] Endpoint: ${apiUrl} | Response:`, errText);
+        throw new Error(`API returned status ${response.status}: ${errText}`);
       }
     } catch (err) {
-      console.error('[DEBUG SUBMIT HANDLER] Caught error in submit:', err);
+      console.error('[API FAILURE] Failed to fetch algorithm recommendation:', err.message || err);
       // Client-side fallback matching
       const desc = formData.description.toLowerCase();
       let match = FALLBACK_RECOMMENDATIONS.default;
