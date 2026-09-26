@@ -1,0 +1,13 @@
+# Environment variables and secrets
+.env
+*.env
+backend/.env
+
+# Dependencies and build outputs
+node_modules/
+dist/
+build/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
