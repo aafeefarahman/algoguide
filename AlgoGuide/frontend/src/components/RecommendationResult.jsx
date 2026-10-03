@@ -1,5 +1,8 @@
 import React from 'react';
 import { Sparkles, Clock, HardDrive, CheckCircle2, ArrowRight, ShieldCheck, GitCompare } from 'lucide-react';
+import VisualizationSection from './VisualizationSection';
+import KeywordGlossarySection from './KeywordGlossarySection';
+import LiveAnimationSection from './LiveAnimationSection';
 
 function parseBullet(bullet) {
   if (typeof bullet === 'object' && bullet !== null) {
@@ -213,6 +216,27 @@ export default function RecommendationResult({ result, onExploreCategory }) {
         </div>
 
       </div>
+      
+      {/* PHASE 1: Visualizations Section (Complexity & Growth Charts) */}
+      <VisualizationSection 
+        algorithmName={algorithmName} 
+        category={category} 
+        promptText={result.userProblem || explanation} 
+      />
+
+      {/* PHASE 2: Keyword Glossary (Contextual DAA Concept Lexicon) */}
+      <KeywordGlossarySection 
+        userProblem={result.userProblem || ""} 
+        solutionData={result} 
+        onNavigateResource={onExploreCategory} 
+      />
+
+      {/* PHASE 3: Live Output Animation (Interactive Execution Simulator) */}
+      <LiveAnimationSection 
+        algorithmName={algorithmName} 
+        category={category} 
+        promptText={result.userProblem || explanation} 
+      />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Compass, BookOpen, HelpCircle, Menu, X } from 'lucide-react';
+import { Compass, Sparkles, BookOpen, HelpCircle, Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -8,6 +8,7 @@ export default function Navbar() {
 
   const navItems = [
     { label: 'Home', path: '/', icon: Compass },
+    { label: 'Recommender', path: '/recommender', icon: Sparkles },
     { label: 'Resources', path: '/resources', icon: BookOpen },
     { label: 'Quiz / Practice', path: '/quiz', icon: HelpCircle }
   ];
@@ -38,9 +39,9 @@ export default function Navbar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
                     isActive
-                      ? 'bg-indigo-600/20 text-white font-semibold border border-indigo-500/30'
+                      ? 'bg-indigo-600/20 text-white font-semibold border border-indigo-500/30 shadow-xs'
                       : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
                   }`}
                 >
@@ -53,12 +54,12 @@ export default function Navbar() {
 
           {/* Primary Action Button */}
           <div className="hidden md:flex items-center">
-            <a
-              href="/#recommender-form-section"
-              className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-md shadow-indigo-600/20 transition-all"
+            <Link
+              to="/recommender"
+              className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-md shadow-indigo-600/20 transition-all cursor-pointer"
             >
               Try Recommender
-            </a>
+            </Link>
           </div>
 
           {/* Mobile menu toggle */}

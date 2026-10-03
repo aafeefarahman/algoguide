@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Code2, Cpu, CheckCircle2, XCircle, Play, Send } from 'lucide-react';
 
-export default function Hero({ onGetStarted }) {
+export default function Hero() {
   return (
     <section className="relative bg-[#0a1628] text-white pt-8 pb-28 md:pt-12 md:pb-36 overflow-hidden">
       {/* Background ambient lighting */}
@@ -22,13 +23,13 @@ export default function Hero({ onGetStarted }) {
             </p>
 
             <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-              <a
-                href="#how-it-works"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-lg shadow-lg shadow-indigo-600/30 hover:shadow-indigo-500/50 transition-all duration-200 border border-indigo-400/20"
+              <Link
+                to="/recommender"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-lg shadow-lg shadow-indigo-600/30 hover:shadow-indigo-500/50 transition-all duration-200 border border-indigo-400/20 cursor-pointer"
               >
-                <span>How It Works</span>
+                <span>Try Recommender</span>
                 <ArrowRight className="w-5 h-5" />
-              </a>
+              </Link>
             </div>
 
             <div className="pt-4 flex items-center gap-4 text-xs text-slate-400 font-medium">

@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
+import RecommenderPage from './pages/RecommenderPage';
 import ResourcesPage from './pages/ResourcesPage';
 import CategoryDetailPage from './pages/CategoryDetailPage';
 import QuizPage from './pages/QuizPage';
@@ -14,6 +15,7 @@ export default function App() {
       <div className="flex-grow">
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/recommender" element={<RecommenderPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/resources/:categoryId" element={<CategoryDetailPage />} />
           <Route path="/quiz" element={<QuizPage />} />

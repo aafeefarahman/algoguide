@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DAA_TOPICS, DIFFICULTIES, QUIZ_QUESTION_BANK } from '../data/quizData';
-import { CheckCircle2, XCircle, HelpCircle, RotateCcw, ArrowRight, Award, Sparkles, BookOpen, Layers, ShieldAlert, ArrowLeft } from 'lucide-react';
+import { CheckCircle2, XCircle, RotateCcw, ArrowRight, Award, Sparkles, BookOpen, Layers, ShieldAlert, ArrowLeft } from 'lucide-react';
 
 export default function QuizPage() {
   const [selectedTopic, setSelectedTopic] = useState(null);
@@ -75,10 +75,6 @@ export default function QuizPage() {
         
         {/* Step Indicator Header */}
         <div className="text-center space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-100 text-indigo-700 text-xs font-semibold">
-            <HelpCircle className="w-4 h-4" />
-            <span>DAA Practice Quiz — 3-Step Assessment</span>
-          </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             Design & Analysis of Algorithms Quiz
           </h1>
